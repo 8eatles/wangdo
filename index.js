@@ -48,6 +48,7 @@ while (true) {
     data[no].totalTriplength += row.triplength;
     data[no].sumX += row.x;
     data[no].tripCnt += 1;
+    data[no].mile += row.maxMile - row.minMile;
   } else {
     data[no] = {
       startTime: row.startTime,
@@ -62,6 +63,7 @@ while (true) {
       totalTriplength: row.triplength,
       sumX: row.x,
       tripCnt: 1,
+      mile: row.maxMile - row.minMile,
     };
   }
 
@@ -72,26 +74,28 @@ while (true) {
 const workbook = new Workbook();
 const results = workbook.add("results");
 
-results[0][0] = "No";
-results[0][1] = "Start Time";
-results[0][2] = "End Time";
-results[0][3] = "Start ODO";
-results[0][4] = "End ODO";
-results[0][5] = "REV";
-results[0][6] = "TQ";
-results[0][7] = "VEL";
-results[0][8] = "TOIL";
-results[0][9] = "IDLE";
-results[0][10] = "Total Triplength";
-results[0][11] = "SUM_X";
-results[0][12] = "Trip Cnt";
+results[0] = [
+  "No",
+  "Start Time",
+  "End Time",
+  "Start ODO",
+  "End ODO",
+  "REV",
+  "TQ",
+  "VEL",
+  "TOIL",
+  "IDLE",
+  "Total Triplength",
+  "SUM_X",
+  "Trip Cnt",
+  "Mile",
+];
 
 Object.entries(data).forEach(
   (
     [
       key,
       {
-        no,
         startTime,
         endTime,
         startODO,
@@ -104,23 +108,27 @@ Object.entries(data).forEach(
         totalTriplength,
         sumX,
         tripCnt,
+        mile,
       },
     ],
     i
   ) => {
-    results[i + 1][0] = key;
-    results[i + 1][1] = startTime;
-    results[i + 1][2] = endTime;
-    results[i + 1][3] = startODO;
-    results[i + 1][4] = endODO;
-    results[i + 1][5] = rev / totalTriplength;
-    results[i + 1][6] = tq / totalTriplength;
-    results[i + 1][7] = vel / totalTriplength;
-    results[i + 1][8] = toil / totalTriplength;
-    results[i + 1][9] = idle / totalTriplength;
-    results[i + 1][10] = totalTriplength;
-    results[i + 1][11] = sumX;
-    results[i + 1][12] = tripCnt;
+    results[i + 1] = [
+      key,
+      startTime,
+      endTime,
+      startODO,
+      endODO,
+      rev / totalTriplength,
+      tq / totalTriplength,
+      vel / totalTriplength,
+      toil / totalTriplength,
+      idle / totalTriplength,
+      totalTriplength,
+      sumX,
+      tripCnt,
+      mile,
+    ];
   }
 );
 
