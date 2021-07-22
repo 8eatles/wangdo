@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "xlsx": "^0.16.4",
+    "xlsx": "^0.17.0",
     "xlsx-workbook": "^1.0.3"
   }
 }
